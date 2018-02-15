@@ -35,13 +35,14 @@ colnames(NOAAsi)
 names(NOAAsi)[names(NOAAsi) == 'NOAA_SampleID'] <- 'SampleID'
 
 #subset 2016 Chinook data from UW CN and Sulfur datasets
-colnames(UWcn)
-UWcn[ ,c(4,1:3,5:21)]
 
-Chin16UWcn <- subset(UWcn, Project == "2016 Juvenile Chinook") #returns columns but no rows
+#make sure there are no spaces in the ANYTHING
+Chin16UWcn <- UWcn[UWcn$Project == "2016_Juvenile_Chinook",] #returns all columns of data for 2016 Juvenile Chinook
 
+Chin16UWsulf <- UWsulf[UWsulf$Study == "2016_Juvenile_Chinook",]
 
-#colnames(UWsulf)
-#UWsulf[ ,c(5,1:4,6:14)]
+#SAVE as standalone excel files jic
 
-#at end subset out different studies from UW Carbon and Nitrogen data and merge with corresponding Sulfer data
+#THEN merge ALL datasets
+
+#at end, subset out different studies from UW Carbon and Nitrogen data and merge with corresponding Sulfer data
