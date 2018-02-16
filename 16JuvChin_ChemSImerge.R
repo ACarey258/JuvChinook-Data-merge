@@ -41,8 +41,20 @@ Chin16UWcn <- UWcn[UWcn$Project == "2016_Juvenile_Chinook",] #returns all column
 
 Chin16UWsulf <- UWsulf[UWsulf$Study == "2016_Juvenile_Chinook",]
 
+#Merge CN and S data
+SIs <- inner_join(Chin16UWcn, Chin16UWsulf, by = c("SampleID"))
+
+#create dataframe of only the data needed to merge with POPs data
+ChinSIs <- as.data.frame(SIs[c(1:59,67:157), c(3,4,8:21,28:34)]) 
+
 #SAVE as standalone excel files jic
+write.csv(ChinSIs, paste(outfile, "2016JuvenileChinook_UW_StableIsotopes.csv", sep = ""))
+
 
 #THEN merge ALL datasets
+alldat <- full_join(POPs, ChinSIs, by = c("SampleID"))
+write.csv(alldat, paste(outfile, "2016JuvenileChinook_POpsAndSIs.csv", sep = ""))
+
+
 
 #at end, subset out different studies from UW Carbon and Nitrogen data and merge with corresponding Sulfer data
