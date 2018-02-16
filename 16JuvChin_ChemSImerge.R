@@ -42,7 +42,7 @@ Chin16UWcn <- UWcn[UWcn$Project == "2016_Juvenile_Chinook",] #returns all column
 Chin16UWsulf <- UWsulf[UWsulf$Study == "2016_Juvenile_Chinook",]
 
 #Merge CN and S data
-SIs <- inner_join(Chin16UWcn, Chin16UWsulf, by = c("SampleID"))
+SIs <- full_join(Chin16UWcn, Chin16UWsulf, by = c("SampleID"))
 
 #create dataframe of only the data needed to merge with POPs data
 ChinSIs <- as.data.frame(SIs[c(1:59,67:157), c(3,4,8:21,28:34)]) 
@@ -52,8 +52,10 @@ write.csv(ChinSIs, paste(outfile, "2016JuvenileChinook_UW_StableIsotopes.csv", s
 
 
 #THEN merge ALL datasets
-alldat <- full_join(POPs, ChinSIs, by = c("SampleID"))
-write.csv(alldat, paste(outfile, "2016JuvenileChinook_POpsAndSIs.csv", sep = ""))
+allUWdat <- full_join(POPs, ChinSIs, by = c("SampleID"))
+Alldat <- full_join(allUWdat, NOAAsi, by = c("SampleID"))
+
+write.csv(Alldat, paste(outfile, "2016JuvenileChinook_POpsAndSIs.csv", sep = ""))
 
 
 
